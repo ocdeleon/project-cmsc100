@@ -1,52 +1,31 @@
 const Comment = require('mongoose').model('Comment');
 
-exports.addComment = (req, res) => {
-    //add Id of commenter
-    const content = req.body.content;
-    const timestamp = new Date();
-
-    if(!err){
-        res.send(false)
-    }
-    else{
-        const NewComment = new Comment({
-          //author
-          //content
-          //timestamp  
-        });
-    }
-
-}
-
-exports.editComment = (req, res) => {
-    
-    // const query = {_id: req.params._id};
-    const content = req.body.content
-    // const timestamp = new Date();
-
-    Comment.updateOne(/*{query}, */{err, subject}) => {
-        if(err){
-            // res.send({});
-        }
-        else{
-            res.send(subject)
-        }
-    }
-}
-
-exports.deleteComment = (req, res) => {
-    // const id = req.body._id
-
-    Comment.remove({_id}, (err) => {
-        if(err){
-            res.send(false)
-        }
-        else{
-            res.send(true)
-        }
+//paramters: content of comment
+exports.addComment = (req, res, next) => {
+    const newComment = new Comment({
+        // author
+        content: req.body.content,
+        // timestamp: new Date()	//already added using default
     })
+
+    newComment.save((err) => {
+        if(!err){res.send(newPost)}
+        // else{res.json('Unable to add comment')}
+        else{res.send('Unable to add comment')}
+    });
 }
 
+//paramters: ID of comment, content of comment
+exports.editComment = (req, res, next) => {
+	Post.updateOne({_id: req.params._id}, {content: req.body.content}, (err, comment) => {
+        if(!err) {res.send(post)}
+        else{
+            res.send("Cannot edit comment")
+        }
+	})
+}
+
+//parameters: ID of comment
 exports.findComments = (req, res) => {
     Comment.find({}, (err, comments) => {
         if(err){
@@ -56,4 +35,15 @@ exports.findComments = (req, res) => {
             res.send(comments)
         }
     })
+}
+
+//parameters: ID of comment
+exports.deleteComment = (req, res, next) => {
+	Comment.findOneAndDelete({_id: req.body.id}, (err, comment) =>{
+		if(!err && comment){
+			res.send("Deleted comment")
+		} else {
+			res.send("Unable to delete comment")
+		}
+	})
 }
