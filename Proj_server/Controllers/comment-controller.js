@@ -17,7 +17,7 @@ exports.addComment = (req, res, next) => {
 
 //paramters: ID of comment, content of comment
 exports.editComment = (req, res, next) => {
-	Post.updateOne({_id: req.params._id}, {content: req.body.content}, (err, comment) => {
+	Post.updateOne({_id: req.params._id}, {$set: {content: req.body.content}}, (err, comment) => {
         if(!err) {res.send(post)}
         else{
             res.send("Cannot edit comment")
@@ -26,8 +26,8 @@ exports.editComment = (req, res, next) => {
 }
 
 //parameters: ID of comment
-exports.findComments = (req, res) => {
-    Comment.find({}, (err, comments) => {
+exports.findComment = (req, res) => {
+    Comment.find({_id: req.body._id}, (err, comments) => {
         if(err){
             res.send("Nothing found")
         }

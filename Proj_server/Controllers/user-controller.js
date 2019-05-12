@@ -2,11 +2,9 @@ const User = require('mongoose').model('User')
 
 //find by name
 exports.findByName = (req, res) => {
-    const name = req.body.name;
-
-    User.findAll( {name: req.query.name}, (err, users) => {
-        if(!err) {res.json(users)}
-        // if(!err) {res.send(users)}
+    User.findAll( {name: req.params.name}, (err, users) => {
+        // if(!err) {res.json(users)}
+        if(!err) {res.send(users)}
         else{
             res.send("error")
         }
@@ -14,21 +12,14 @@ exports.findByName = (req, res) => {
 }
 
 //update the user based on params
-exports.updateUser = (req, res) =>{
-
-    const query = {name: req.params.name};
-    //get parameters to edit
-
-    const updateValues = {$set: {name: req.body.name, about: req.body.about, birthday: req.body.birthday}}
-    User.updateOne({query}, {updated}, (err, user)=>{
+exports.editUser = (req, res, next) =>{
+    User.updateOne({name: req.params.name}, {$set: {name: req.body.name, email: req.body.email, about: req.body.about, birthday: req.body.birthday}}, (err, user) => {
         if(!err){
-            res.send(user);
-        } 
-        else{
+            res.send(user)
+        } else{
             res.send("error found, could not update")
         }
     })
-
 }
 
 // exports.addFriend = (req, res) => {
@@ -36,21 +27,22 @@ exports.updateUser = (req, res) =>{
 // }
 
 //add new user
-exports.addUser = (req, res) => {
-    const email = req.body.email;
-    const name = req.body.name;
-    const password = req.body.password;
-    const birthday = req.body.birthday;
-
-	const newUser = new User({name, email, password, birthday});
+// exports.addUser = (req, res, next) => {
+// 	const newUser = new User({
+//         const email: req.body.email,
+//         const name: req.body.name,
+//         const password: req.body.password,
+//         const birthday: req.body.birthday
+//     })
     
-    newUser.save((err,user) => {
-		if(!err) {
-            res.json(user);
-            // res.send(user);             
-        }
-		else {
-            res.send("could not save new user");
-		}
-	});
-}
+//     newUser.save((err,user) => {
+// 		if(!err) {
+//             // res.json(user);
+//             // res.send(user);
+//             res.send("Success")             
+//         }
+// 		else {
+//             res.send("could not save new user");
+// 		}
+// 	});
+// }
