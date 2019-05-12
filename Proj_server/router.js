@@ -6,7 +6,7 @@ const postController = require('./Controllers/post-controller');
 
 module.exports = (app) => {
 
-  app.get('/findbyname', userController.findByName);
+  app.post('/findbyname', userController.findByName);
   app.post('/edituser', userController.editUser);
   // app.post('add-friend', userController.addFriend);
 

@@ -8,8 +8,7 @@ exports.signup = (req, res) => {
   const newUser = new User({
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
-    birthday: req.body.birthday
+    password: req.body.password
   })
 
   newUser.save((err) => {
@@ -69,11 +68,12 @@ exports.checkIfLoggedIn = (req, res) => {
     const userId = decoded._id
 
     // Check if user exists
-    return User.findById(userId, (err, user) => {
-      if (err || !user) {
+    return User.findById(userId, (userErr, user) => {
+      if (userErr || !user) {
         // Scenario 3: FAIL - Failed to find user based on id inside token
         return res.send({ isLoggedIn: false })
       }
+
       // Scenario 4: SUCCESS - Token and user data are valid
       console.log('success')
       return res.send({ isLoggedIn: true })

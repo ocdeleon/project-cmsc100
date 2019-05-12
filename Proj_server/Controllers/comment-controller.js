@@ -3,13 +3,13 @@ const Comment = require('mongoose').model('Comment');
 //paramters: content of comment
 exports.addComment = (req, res, next) => {
     const newComment = new Comment({
-        // author
+        // author need to automatically add author here
         content: req.body.content,
-        // timestamp: new Date()	//already added using default
+        timestamp: new Date()	//already added using default
     })
 
     newComment.save((err) => {
-        if(!err){res.send(newPost)}
+        if(!err){ res.send(newPost)}
         // else{res.json('Unable to add comment')}
         else{res.send('Unable to add comment')}
     });
@@ -17,7 +17,7 @@ exports.addComment = (req, res, next) => {
 
 //paramters: ID of comment, content of comment
 exports.editComment = (req, res, next) => {
-	Post.updateOne({_id: req.params._id}, {$set: {content: req.body.content}}, (err, comment) => {
+	Post.updateOne({_id: req.params._id}, {content: req.body.content}, (err, comment) => {
         if(!err) {res.send(post)}
         else{
             res.send("Cannot edit comment")
@@ -26,8 +26,8 @@ exports.editComment = (req, res, next) => {
 }
 
 //parameters: ID of comment
-exports.findComment = (req, res) => {
-    Comment.find({_id: req.body._id}, (err, comments) => {
+exports.findComments = (req, res) => {
+    Comment.find({}, (err, comments) => {
         if(err){
             res.send("Nothing found")
         }

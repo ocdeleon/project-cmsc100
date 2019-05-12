@@ -15,16 +15,15 @@ exports.addPost = (req, res, next) => {
 		});
 }
 
-// must be able to add the comment into the post
-// exports.addComment = (req, res, next) => {
-// 		Post.updateOne({id: req.params._id}, {$set: {content: req.body.content}}, (err, post) => {
-// 			if(!err) {res.send(post)}
-// 		})
-// }
+exports.addComment = (req, res, next) => {
+		Post.updateOne({id: req.params._id}, {$set: {content: req.body.content}}, (err, post) => {
+			if(!err) {res.send(post)}
+		})
+}
 
 //look for the post with the ID request then edit the content
 exports.editPost = (req, res, next) => {
-	Post.updateOne({_id: req.params._id}, {content: req.body.content}, (err, post) => {
+	Post.updateOne({_id: req.params._id}, {$set: {content: req.body.content}}, (err, post) => {
 		if(!err) {res.send(post)}
 	})
 }
