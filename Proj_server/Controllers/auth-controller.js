@@ -6,9 +6,10 @@ const User = mongoose.model('User')
 
 exports.signup = (req, res) => {
   const newUser = new User({
-    name: req.body.name,
     email: req.body.email,
-    password: req.body.password
+    name: req.body.name,
+    password: req.body.password,
+    birthday: req.body.birthday
   })
 
   newUser.save((err) => {
