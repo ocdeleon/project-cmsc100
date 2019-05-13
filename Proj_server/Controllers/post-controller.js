@@ -15,11 +15,11 @@ exports.addPost = (req, res, next) => {
 		});
 }
 
-exports.addComment = (req, res, next) => {
-		Post.updateOne({id: req.params._id}, {$set: {content: req.body.content}}, (err, post) => {
-			if(!err) {res.send(post)}
-		})
-}
+// exports.addComment = (req, res, next) => {
+// 		Post.updateOne({id: req.params._id}, {$set: {content: req.body.content}}, (err, post) => {
+// 			if(!err) {res.send(post)}
+// 		})
+// }
 
 //look for the post with the ID request then edit the content
 exports.editPost = (req, res, next) => {

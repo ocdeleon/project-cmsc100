@@ -1,12 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
+// const cookieParser = require('cookie-parser')
+
+//set up mongoose and models
+mongoose.connect('mongodb://localhost:27017/Project', { useNewUrlParser: true })
+require('./models/index')
 
 //initialize server
 const app = express()
 
-// CORS
+//CORS
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.setHeader('Access-Control-Allow-Methods' ,'GET,POST,OPTIONS')
@@ -15,16 +19,14 @@ app.use(function(req, res, next) {
     next()
   })
 
-//set up mongoose and models
-mongoose.connect('mongodb://localhost:27017/Project', { useNewUrlParser: true })
-require('./models/user')
+
 
 //set up bodyParser
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 //cookie parser for auth
-app.use(cookieParser())
+// app.use(cookieParser())
 
 //require router
 require('./router')(app)
