@@ -13,7 +13,7 @@ exports.findByName = (req, res) => {
 }
 
 //update the user based on params
-exports.updateUser = (req, res) =>{
+exports.editUser = (req, res) =>{
     User.updateOne({name: req.params.name}, {$set: {name: req.body.name, about: req.body.about, birthday: req.body.birthday}}, (err, user)=>{
         if(!err){
             res.send(user);

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 
 // get model registered earlier
 const User = mongoose.model('User')
@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
     else { return res.send({ success: true })}
   });
 }
-
+/*
 exports.login = (req, res) => {
 
   const email = req.body.email.trim()
@@ -82,3 +82,4 @@ exports.checkIfLoggedIn = (req, res) => {
   })
 
 }
+*/
